@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Connect – Donation History</title>
+  <link rel="stylesheet" href="donorRequest.css" />
+  
+  <link href="donorRequest.css" rel="stylesheet"/>
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+  
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <i data-lucide="droplets"></i>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">Blood Connect</span>
+        <span class="logo-sub">Donor Portal</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="user"></i>
+        <span>My Profile</span>
+      </a>
+      <a href="#" class="nav-item active">
+        <i data-lucide="heart-pulse"></i>
+        <span>Donation History</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="inbox"></i>
+        <span>Requests</span>
+        <span class="badge">2</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="settings"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <a href="#" class="nav-item signout">
+      <i data-lucide="log-out"></i>
+      <span>Sign Out</span>
+    </a>
+  </aside>
+
+  
+  <main class="main">
+
+    
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-red">
+          <i data-lucide="heart"></i>
+        </div>
+        <div class="stat-body">
+          <span class="stat-label">Total Donations</span>
+          <span class="stat-value">12</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <i data-lucide="droplet"></i>
+        </div>
+        <div class="stat-body">
+          <span class="stat-label">Total Volume</span>
+          <span class="stat-value">4,800 <small>mL</small></span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-purple">
+          <i data-lucide="calendar-check"></i>
+        </div>
+        <div class="stat-body">
+          <span class="stat-label">Last Donation</span>
+          <span class="stat-value">Jan 15,<br/>2026</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-orange">
+          <i data-lucide="flame"></i>
+        </div>
+        <div class="stat-body">
+          <span class="stat-label">Donation Streak</span>
+          <span class="stat-value">3</span>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="table-section">
+      <div class="table-header">
+        <h2 class="table-title">Donation History</h2>
+        <div class="table-controls">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" placeholder="Search ID…" />
+          </div>
+          <button class="filter-btn">
+            <i data-lucide="sliders-horizontal"></i>
+            Filters
+          </button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Donation ID</th>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Blood Group</th>
+              <th>Units</th>
+              <th>Status</th>
+              <th>Certificate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="id-cell">#DN-20-21-03</td>
+              <td>Jan 15, 2026</td>
+              <td>City General Hospital</td>
+              <td><span class="blood-badge red">B+</span></td>
+              <td>450 mL</td>
+              <td><span class="status completed">Completed</span></td>
+              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="id-cell">#DN-20-23-01</td>
+              <td>Oct 20, 2025</td>
+              <td>Continental Hospital</td>
+              <td><span class="blood-badge red">B+</span></td>
+              <td>450 mL</td>
+              <td><span class="status completed">Completed</span></td>
+              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="id-cell">#DN-20-22-11</td>
+              <td>Jul 15, 2025</td>
+              <td>Westside Clinic</td>
+              <td><span class="blood-badge yellow">A-</span></td>
+              <td>400 mL</td>
+              <td><span class="status completed">Completed</span></td>
+              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="id-cell">#DN-20-22-12</td>
+              <td>Apr 10, 2025</td>
+              <td>City General Hospital</td>
+              <td><span class="blood-badge green">O+</span></td>
+              <td>450 mL</td>
+              <td><span class="status completed">Completed</span></td>
+              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="id-cell">#DN-20-21-12</td>
+              <td>Jan 05, 2025</td>
+              <td>Memorial Hospital</td>
+              <td><span class="blood-badge red">B+</span></td>
+              <td>450 mL</td>
+              <td><span class="status cancelled">Cancelled</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td class="id-cell">#DN-20-24-02</td>
+              <td>Oct 12, 2024</td>
+              <td>Continental Hospital</td>
+              <td><span class="blood-badge blue">A+</span></td>
+              <td>400 mL</td>
+              <td><span class="status completed">Completed</span></td>
+              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+      <div class="pagination-bar">
+        <span class="page-info">Showing 1 to 6 of 12 entries</span>
+        <div class="pagination">
+          <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <i data-lucide="droplets"></i>
+        <span>Blood Connect</span>
+      </div>
+      <p class="footer-copy">© 2024 Blood Connect. The Pulse of Precision</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Support</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

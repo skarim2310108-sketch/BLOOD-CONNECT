@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Connect – Donor Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+  <link href="donorDashbord.css" rel="stylesheet"/>
+</head>
+<body>
+
+  
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon"><i class="fa-solid fa-droplet"></i></span>
+      <div>
+        <div class="logo-title">Blood Connect</div>
+        <div class="logo-sub">Donor Portal</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <i class="fa-solid fa-grid-2"></i> Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-user"></i> My Profile
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-clock"></i> Donation History
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-envelope"></i> Requests
+        <span class="badge">3</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-gear"></i> Settings
+      </a>
+    </nav>
+
+    <a href="#" class="nav-item signout">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+    </a>
+  </aside>
+
+  
+  <main class="main">
+
+    
+    <header class="topbar">
+      <div>
+        <h1 class="page-title">Donor Dashboard</h1>
+        <p class="page-sub">Welcome back, Sabrina! Here's your donation overview.</p>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search requests..."/>
+        </div>
+        <button class="icon-btn notif-btn">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="user-chip">
+          <div class="user-info">
+            <span class="user-name">Sabrina</span>
+            <span class="user-role">Regular Donor</span>
+          </div>
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        </div>
+      </div>
+    </header>
+
+    
+    <section class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-icon red"><i class="fa-regular fa-heart"></i></div>
+        <div>
+          <div class="stat-label">Total Donations</div>
+          <div class="stat-value">12</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-droplet"></i></div>
+        <div>
+          <div class="stat-label">Blood Group</div>
+          <div class="stat-value">B+</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div>
+          <div class="stat-label">Status</div>
+          <div class="stat-value red-text">Blocked</div>
+          <div class="stat-note">16 days left</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fa-regular fa-calendar"></i></div>
+        <div>
+          <div class="stat-label">Next Eligible</div>
+          <div class="stat-value">Apr 15, 2026</div>
+        </div>
+      </div>
+    </section>
+
+    
+    <div class="mid-row">
+
+      
+      <div class="mid-left">
+
+        
+        <div class="card tracker-card">
+          <div class="tracker-header">
+            <div>
+              <div class="card-title">Donation Eligibility Tracker</div>
+              <div class="card-sub">Track your mandatory 3-month resting period between donations.</div>
+            </div>
+            <div class="tracker-meta">
+              <span class="badge-pill orange-pill">Cooling Period</span>
+              <div class="last-donation">
+                <span class="ld-label">Last Donation</span>
+                <span class="ld-date">Jan 15, 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-labels">
+            <span>0 Days</span>
+            <span class="highlight-label">16 Days Remaining</span>
+            <span>90 Days</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 82%;"></div>
+          </div>
+
+          <div class="tracker-footer">
+            <span><i class="fa-regular fa-clock"></i> Auto-blocked until <strong>April 15, 2026</strong></span>
+            <a href="#" class="link-btn">View Guidelines</a>
+          </div>
+        </div>
+
+        
+        <div class="card requests-card">
+          <div class="requests-header">
+            <div>
+              <div class="card-title">Urgent Donation Requests</div>
+              <div class="card-sub">Patients in your area matching your blood group.</div>
+            </div>
+            <button class="btn-outline-red">View All</button>
+          </div>
+
+          <div class="request-list">
+
+            <div class="request-item">
+              <div class="req-blood-badge bplus">B+</div>
+              <div class="req-info">
+                <div class="req-name-row">
+                  <span class="req-name">Tahmina</span>
+                  <span class="req-urgency critical">Critical</span>
+                </div>
+                <div class="req-meta">
+                  <span><i class="fa-solid fa-location-dot"></i> City General Hospital</span>
+                  <span class="req-dist">(2.4 km)</span>
+                  <span><i class="fa-regular fa-clock"></i> Today, 09:30 AM</span>
+                </div>
+              </div>
+              <div class="req-actions">
+                <button class="req-decline">Decline</button>
+                <button class="req-accept">Accept Request</button>
+              </div>
+            </div>
+
+            <div class="request-item">
+              <div class="req-blood-badge bplus">B+</div>
+              <div class="req-info">
+                <div class="req-name-row">
+                  <span class="req-name">Dristy Islam</span>
+                  <span class="req-urgency urgent">Urgent</span>
+                </div>
+                <div class="req-meta">
+                  <span><i class="fa-solid fa-location-dot"></i> Continental Hospital</span>
+                  <span class="req-dist">(5.1 km)</span>
+                  <span><i class="fa-regular fa-clock"></i> Yesterday, 14:15 PM</span>
+                </div>
+              </div>
+              <div class="req-actions">
+                <button class="req-decline">Decline</button>
+                <button class="req-accept disabled">Accept Request</button>
+              </div>
+            </div>
+
+            <div class="request-item">
+              <div class="req-blood-badge bplus">B+</div>
+              <div class="req-info">
+                <div class="req-name-row">
+                  <span class="req-name">Sarah Khan</span>
+                  <span class="req-urgency normal">Normal</span>
+                </div>
+                <div class="req-meta">
+                  <span><i class="fa-solid fa-location-dot"></i> Westside Clinic</span>
+                  <span class="req-dist">(6.7 km)</span>
+                  <span><i class="fa-regular fa-clock"></i> Mar 28, 2026</span>
+                </div>
+              </div>
+              <div class="req-actions">
+                <button class="req-decline">Decline</button>
+                <button class="req-accept disabled">Accept Request</button>
+              </div>
+            </div>
+
+            <div class="request-item">
+              <div class="req-blood-badge ominus">O-</div>
+              <div class="req-info">
+                <div class="req-name-row">
+                  <span class="req-name">Rifat Hossen</span>
+                  <span class="req-urgency critical">Critical</span>
+                </div>
+                <div class="req-meta">
+                  <span><i class="fa-solid fa-location-dot"></i> Memorial Hospital</span>
+                  <span class="req-dist">(3.2 km)</span>
+                  <span><i class="fa-regular fa-clock"></i> Mar 27, 2026</span>
+                </div>
+              </div>
+              <div class="req-actions">
+                <button class="req-decline">Decline</button>
+                <button class="req-accept disabled">Accept Request</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      
+      <div class="mid-right">
+
+        
+        <div class="card blood-profile-card">
+          <div class="bp-header">
+            <span class="card-title">Blood Profile</span>
+            <a href="#" class="link-btn">Edit</a>
+          </div>
+          <div class="bp-body">
+            <div class="blood-drop-wrap">
+              <div class="blood-drop">
+                <i class="fa-solid fa-droplet"></i>
+                <span class="verified-dot"><i class="fa-solid fa-check"></i></span>
+              </div>
+              <div class="bp-group-label">Registered Blood Group</div>
+              <div class="bp-group">B+</div>
+            </div>
+            <div class="bp-info-box">
+              <i class="fa-solid fa-bolt"></i>
+              Your blood group is verified. You can donate to patients with <strong>B+, B-, AB+, AB-</strong> blood types.
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="card quick-actions-card">
+          <div class="card-title">Quick Actions</div>
+          <div class="qa-list">
+            <div class="qa-item">
+              <div class="qa-icon"><i class="fa-regular fa-calendar-check"></i></div>
+              <div>
+                <div class="qa-title">Schedule Donation</div>
+                <div class="qa-sub">Book an appointment at a center</div>
+              </div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-icon heart-icon"><i class="fa-regular fa-heart"></i></div>
+              <div>
+                <div class="qa-title">Health Assessment</div>
+                <div class="qa-sub">Update your medical history</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="footer-left">
+      <div class="footer-logo">
+        <i class="fa-solid fa-droplet"></i> Blood connect
+      </div>
+      <div class="footer-copy">© 2024 Blood connect. The Pulse of Precision</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Support</a>
+    </div>
+  </footer>
+
+</body>
+</html>
