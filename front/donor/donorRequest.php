@@ -61,7 +61,7 @@ $pendingRequestsCount = $stmt->fetchColumn();
         <i data-lucide="layout-dashboard"></i>
         <span>Dashboard</span>
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorProfile.php" class="nav-item">
         <i data-lucide="user"></i>
         <span>My Profile</span>
       </a>
@@ -69,12 +69,12 @@ $pendingRequestsCount = $stmt->fetchColumn();
         <i data-lucide="heart-pulse"></i>
         <span>Donation History</span>
       </a>
-      <a href="donorDashboard.php" class="nav-item">
+      <a href="donorRequests.php" class="nav-item">
         <i data-lucide="inbox"></i>
         <span>Requests</span>
         <span class="badge"><?php echo (int)$pendingRequestsCount; ?></span>
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorSettings.php" class="nav-item">
         <i data-lucide="settings"></i>
         <span>Settings</span>
       </a>

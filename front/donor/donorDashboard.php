@@ -169,17 +169,17 @@ $compatibleRecipients = [
       <a href="donorDashboard.php" class="nav-item active">
         <i class="fa-solid fa-grid-2"></i> Dashboard
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorProfile.php" class="nav-item">
         <i class="fa-regular fa-user"></i> My Profile
       </a>
       <a href="donorRequest.php" class="nav-item">
         <i class="fa-regular fa-clock"></i> Donation History
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorRequests.php" class="nav-item">
         <i class="fa-regular fa-envelope"></i> Requests
         <span class="badge"><?php echo count($pendingRequests); ?></span>
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorSettings.php" class="nav-item">
         <i class="fa-regular fa-gear"></i> Settings
       </a>
     </nav>
