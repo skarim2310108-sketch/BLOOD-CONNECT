@@ -458,6 +458,12 @@ body {
   border: 1px solid #FDDFA5;
 }
 
+.green-pill {
+  background: #F0FDF4;
+  color: #16A34A;
+  border: 1px solid #BBF7D0;
+}
+
 .last-donation {
   display: flex;
   flex-direction: column;

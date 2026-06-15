@@ -21,9 +21,16 @@ function redirect($url) {
     exit;
 }
 
-// Helper function to check if user is logged in
+// Helper function to check if recipient is logged in
 function requireRecipientLogin() {
     if (empty($_SESSION['recipient_id'])) {
         redirect('recipient-login.php');
+    }
+}
+
+// Helper function to check if donor is logged in
+function requireDonorLogin() {
+    if (empty($_SESSION['donor_id'])) {
+        redirect('donor-login.php');
     }
 }

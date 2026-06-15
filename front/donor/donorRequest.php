@@ -1,4 +1,38 @@
-<?php // donorRequest.php ?>
+<?php
+session_start();
+require_once '../db.php';
+requireDonorLogin();
+
+$donorId = $_SESSION['donor_id'];
+$donorName = $_SESSION['donor_name'];
+
+// Fetch donation stats
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM donations WHERE donor_id = ? AND status = 'completed'");
+$stmt->execute([$donorId]);
+$totalDonations = $stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT COALESCE(SUM(units), 0) FROM donations WHERE donor_id = ? AND status = 'completed'");
+$stmt->execute([$donorId]);
+$totalVolume = $stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT donation_date FROM donations WHERE donor_id = ? AND status = 'completed' ORDER BY donation_date DESC LIMIT 1");
+$stmt->execute([$donorId]);
+$lastDonation = $stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT COUNT(DISTINCT YEAR(donation_date)) FROM donations WHERE donor_id = ? AND status = 'completed'");
+$stmt->execute([$donorId]);
+$activeYears = $stmt->fetchColumn();
+
+// Fetch donation history
+$stmt = $pdo->prepare("SELECT * FROM donations WHERE donor_id = ? ORDER BY donation_date DESC");
+$stmt->execute([$donorId]);
+$donations = $stmt->fetchAll();
+
+// Pending requests count for badge
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM blood_requests WHERE status = 'pending' AND blood_group = ? AND district = ?");
+$stmt->execute([$_SESSION['donor_blood_group'], $_SESSION['donor_district']]);
+$pendingRequestsCount = $stmt->fetchColumn();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +40,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blood Connect – Donation History</title>
   <link rel="stylesheet" href="donorRequest.css" />
-  
-  <link href="donorRequest.css" rel="stylesheet"/>
-  
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
@@ -26,7 +57,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item">
+      <a href="donorDashboard.php" class="nav-item">
         <i data-lucide="layout-dashboard"></i>
         <span>Dashboard</span>
       </a>
@@ -34,14 +65,14 @@
         <i data-lucide="user"></i>
         <span>My Profile</span>
       </a>
-      <a href="#" class="nav-item active">
+      <a href="donorRequest.php" class="nav-item active">
         <i data-lucide="heart-pulse"></i>
         <span>Donation History</span>
       </a>
-      <a href="#" class="nav-item">
+      <a href="donorDashboard.php" class="nav-item">
         <i data-lucide="inbox"></i>
         <span>Requests</span>
-        <span class="badge">2</span>
+        <span class="badge"><?php echo (int)$pendingRequestsCount; ?></span>
       </a>
       <a href="#" class="nav-item">
         <i data-lucide="settings"></i>
@@ -49,7 +80,7 @@
       </a>
     </nav>
 
-    <a href="#" class="nav-item signout">
+    <a href="logout.php" class="nav-item signout">
       <i data-lucide="log-out"></i>
       <span>Sign Out</span>
     </a>
@@ -66,7 +97,7 @@
         </div>
         <div class="stat-body">
           <span class="stat-label">Total Donations</span>
-          <span class="stat-value">12</span>
+          <span class="stat-value"><?php echo (int)$totalDonations; ?></span>
         </div>
       </div>
 
@@ -76,7 +107,7 @@
         </div>
         <div class="stat-body">
           <span class="stat-label">Total Volume</span>
-          <span class="stat-value">4,800 <small>mL</small></span>
+          <span class="stat-value"><?php echo number_format((int)$totalVolume); ?> <small>mL</small></span>
         </div>
       </div>
 
@@ -86,7 +117,7 @@
         </div>
         <div class="stat-body">
           <span class="stat-label">Last Donation</span>
-          <span class="stat-value">Jan 15,<br/>2026</span>
+          <span class="stat-value"><?php echo $lastDonation ? date('M d,<br/>Y', strtotime($lastDonation)) : '—'; ?></span>
         </div>
       </div>
 
@@ -95,8 +126,8 @@
           <i data-lucide="flame"></i>
         </div>
         <div class="stat-body">
-          <span class="stat-label">Donation Streak</span>
-          <span class="stat-value">3</span>
+          <span class="stat-label">Active Years</span>
+          <span class="stat-value"><?php echo (int)$activeYears; ?></span>
         </div>
       </div>
     </section>
@@ -131,72 +162,40 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="id-cell">#DN-20-21-03</td>
-              <td>Jan 15, 2026</td>
-              <td>City General Hospital</td>
-              <td><span class="blood-badge red">B+</span></td>
-              <td>450 mL</td>
-              <td><span class="status completed">Completed</span></td>
-              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
-            </tr>
-            <tr>
-              <td class="id-cell">#DN-20-23-01</td>
-              <td>Oct 20, 2025</td>
-              <td>Continental Hospital</td>
-              <td><span class="blood-badge red">B+</span></td>
-              <td>450 mL</td>
-              <td><span class="status completed">Completed</span></td>
-              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
-            </tr>
-            <tr>
-              <td class="id-cell">#DN-20-22-11</td>
-              <td>Jul 15, 2025</td>
-              <td>Westside Clinic</td>
-              <td><span class="blood-badge yellow">A-</span></td>
-              <td>400 mL</td>
-              <td><span class="status completed">Completed</span></td>
-              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
-            </tr>
-            <tr>
-              <td class="id-cell">#DN-20-22-12</td>
-              <td>Apr 10, 2025</td>
-              <td>City General Hospital</td>
-              <td><span class="blood-badge green">O+</span></td>
-              <td>450 mL</td>
-              <td><span class="status completed">Completed</span></td>
-              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
-            </tr>
-            <tr>
-              <td class="id-cell">#DN-20-21-12</td>
-              <td>Jan 05, 2025</td>
-              <td>Memorial Hospital</td>
-              <td><span class="blood-badge red">B+</span></td>
-              <td>450 mL</td>
-              <td><span class="status cancelled">Cancelled</span></td>
-              <td>—</td>
-            </tr>
-            <tr>
-              <td class="id-cell">#DN-20-24-02</td>
-              <td>Oct 12, 2024</td>
-              <td>Continental Hospital</td>
-              <td><span class="blood-badge blue">A+</span></td>
-              <td>400 mL</td>
-              <td><span class="status completed">Completed</span></td>
-              <td><button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button></td>
-            </tr>
+            <?php if (count($donations) > 0): ?>
+              <?php foreach ($donations as $index => $donation): ?>
+                <tr>
+                  <td class="id-cell">#DN-<?php echo str_pad($donation['id'], 3, '0', STR_PAD_LEFT); ?></td>
+                  <td><?php echo date('M d, Y', strtotime($donation['donation_date'])); ?></td>
+                  <td><?php echo htmlspecialchars($donation['location']); ?></td>
+                  <td><span class="blood-badge red"><?php echo htmlspecialchars($donation['blood_group']); ?></span></td>
+                  <td><?php echo (int)$donation['units']; ?> mL</td>
+                  <td><span class="status <?php echo $donation['status'] == 'completed' ? 'completed' : 'cancelled'; ?>"><?php echo ucfirst(htmlspecialchars($donation['status'])); ?></span></td>
+                  <td>
+                    <?php if ($donation['status'] == 'completed'): ?>
+                      <button class="cert-btn" title="Download Certificate"><i data-lucide="download"></i></button>
+                    <?php else: ?>
+                      —
+                    <?php endif; ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7" style="text-align:center; padding: 24px; color: var(--text-soft);">No donation history found.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
 
       
       <div class="pagination-bar">
-        <span class="page-info">Showing 1 to 6 of 12 entries</span>
+        <span class="page-info">Showing <?php echo count($donations); ?> entr<?php echo count($donations) === 1 ? 'y' : 'ies'; ?></span>
         <div class="pagination">
           <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
           <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+          <button class="page-btn" disabled><i data-lucide="chevron-right"></i></button>
         </div>
       </div>
     </section>
@@ -210,7 +209,7 @@
         <i data-lucide="droplets"></i>
         <span>Blood Connect</span>
       </div>
-      <p class="footer-copy">© 2024 Blood Connect. The Pulse of Precision</p>
+      <p class="footer-copy">© <?php echo date('Y'); ?> Blood Connect. The Pulse of Precision</p>
     </div>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>

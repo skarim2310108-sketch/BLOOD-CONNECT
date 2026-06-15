@@ -57,6 +57,22 @@ try {
         FOREIGN KEY (recipient_id) REFERENCES recipients(id) ON DELETE CASCADE
     )");
 
+    // Donations table (for donor donation history)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS donations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        donor_id INT NOT NULL,
+        request_id INT DEFAULT NULL,
+        donation_date DATE NOT NULL,
+        location VARCHAR(100) NOT NULL,
+        blood_group VARCHAR(5) NOT NULL,
+        units INT NOT NULL DEFAULT 450,
+        status ENUM('completed','cancelled') DEFAULT 'completed',
+        certificate_id VARCHAR(50) DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (donor_id) REFERENCES donors(id) ON DELETE CASCADE,
+        FOREIGN KEY (request_id) REFERENCES blood_requests(id) ON DELETE SET NULL
+    )");
+
     // Insert sample donors if none exist
     $count = $pdo->query("SELECT COUNT(*) FROM donors")->fetchColumn();
     if ($count == 0) {
