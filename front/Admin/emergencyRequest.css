@@ -1,10 +1,12 @@
 /* ==========================================================================
-   Blood Connect - admindashboard.css
+   Blood Connect - emergencyRequest.css
    ========================================================================== */
 
 :root {
   --red: #e02440;
   --red-dark: #c81e3a;
+  --green: #1aa251;
+  --green-dark: #15903f;
   --pink-bg: #fdeef0;
   --pink-soft: #fbe2e6;
   --dark: #1e2533;
@@ -20,8 +22,8 @@
   --green-fg: #1aa251;
   --red-bg: #fbe1e4;
   --red-fg: #e02440;
-  --yellow-bg: #fdf3d3;
-  --yellow-fg: #e0ad1c;
+  --blue-bg: #dbeafe;
+  --blue-fg: #3b82f6;
 }
 
 * {
@@ -174,7 +176,7 @@ a {
 .page-subtitle {
   font-size: 0.9rem;
   color: var(--gray-text);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 /* ==========================================================================
@@ -193,6 +195,21 @@ a {
   border: 1px solid var(--light-border);
   border-radius: var(--radius);
   padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-text h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.stat-text p {
+  font-size: 0.85rem;
+  color: var(--gray-text);
 }
 
 .stat-icon {
@@ -202,8 +219,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
   font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .icon-orange {
@@ -221,81 +238,217 @@ a {
   color: var(--red-fg);
 }
 
-.icon-yellow {
-  background: var(--yellow-bg);
-  color: var(--yellow-fg);
-}
-
-.stat-card h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--dark);
-  margin-bottom: 4px;
-}
-
-.stat-card p {
-  font-size: 0.85rem;
-  color: var(--gray-text);
+.icon-blue {
+  background: var(--blue-bg);
+  color: var(--blue-fg);
 }
 
 /* ==========================================================================
-   Action Cards
+   Filter Tabs
    ========================================================================== */
 
-.action-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
-.action-card {
+.tab {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--light-border);
+  background: var(--white);
+  color: var(--gray-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.tab.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+/* ==========================================================================
+   Request List / Cards
+   ========================================================================== */
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.request-card {
   background: var(--white);
   border: 1px solid var(--light-border);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
 }
 
-.action-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+/* Blood type badge */
+.blood-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
 }
 
-.icon-red-soft {
+.badge-a-pos {
+  background: #fbe1e4;
+  color: var(--red);
+}
+
+.badge-o-pos {
+  background: #fbe1e4;
+  color: #e57a86;
+}
+
+.badge-b-pos {
+  background: #fbe1e4;
+  color: #ef9aa3;
+}
+
+/* Request info */
+.request-info {
+  flex: 1;
+}
+
+.request-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.request-name-row h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 0.02em;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.badge-urgent {
   background: var(--red-bg);
   color: var(--red);
 }
 
-.action-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
+.badge-pending {
+  background: var(--orange-bg);
+  color: var(--orange-fg);
+}
+
+.request-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 10px;
+}
+
+.detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.detail i {
+  margin-top: 3px;
+  color: var(--gray-text);
+  font-size: 0.8rem;
+}
+
+.detail div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-label {
+  font-size: 0.72rem;
+  color: var(--gray-text);
+}
+
+.detail-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.request-reason {
+  font-size: 0.85rem;
   color: var(--dark);
   margin-bottom: 8px;
 }
 
-.action-card p {
-  font-size: 0.88rem;
-  color: var(--gray-text);
-  margin-bottom: 18px;
-  max-width: 420px;
-}
-
-.action-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
+.request-reason strong {
   font-weight: 600;
-  color: var(--red);
 }
 
-.action-link:hover {
-  text-decoration: underline;
+.request-time {
+  font-size: 0.75rem;
+  color: #9aa1b1;
+}
+
+/* Actions */
+.request-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-reject {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn-reject:hover {
+  background: var(--red-dark);
+}
+
+.btn-approve {
+  background: var(--green);
+  color: var(--white);
+}
+
+.btn-approve:hover {
+  background: var(--green-dark);
 }
 
 /* ==========================================================================
@@ -343,8 +496,16 @@ a {
     padding: 24px;
   }
 
-  .action-grid {
-    grid-template-columns: 1fr;
+  .request-card {
+    flex-direction: column;
+  }
+
+  .request-actions {
+    width: 100%;
+  }
+
+  .request-actions .btn {
+    flex: 1;
   }
 }
 
@@ -360,5 +521,9 @@ a {
 
   .sidebar-nav {
     flex-wrap: wrap;
+  }
+
+  .request-details {
+    gap: 16px;
   }
 }

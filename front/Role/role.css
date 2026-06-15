@@ -1,0 +1,301 @@
+/* ==========================================================================
+   Blood Connect - role.css
+   ========================================================================== */
+
+:root {
+  --red: #e02440;
+  --red-dark: #c81e3a;
+  --pink-bg: #fdeef0;
+  --dark: #1e2533;
+  --gray-text: #6b7280;
+  --light-border: #e5e7eb;
+  --light-gray: #f6f7fb;
+  --card-bg: #f1f2f6;
+  --white: #ffffff;
+  --radius: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Top Bar
+   ========================================================================== */
+
+.topbar {
+  border-bottom: 1px solid var(--light-border);
+  padding: 18px 0;
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-home {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn-home:hover {
+  background: var(--red-dark);
+}
+
+/* ==========================================================================
+   Page Wrap
+   ========================================================================== */
+
+.page-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+}
+
+/* ==========================================================================
+   Brand Block
+   ========================================================================== */
+
+.brand-block {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.brand-icon i {
+  color: var(--white);
+  font-size: 1.2rem;
+}
+
+.brand-block h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+
+.brand-tagline {
+  font-size: 0.8rem;
+  color: var(--red);
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Role Card
+   ========================================================================== */
+
+.role-card {
+  width: 100%;
+  max-width: 720px;
+  background: var(--light-gray);
+  border-radius: 18px;
+  padding: 36px 40px;
+  text-align: center;
+}
+
+.role-card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.role-subtitle {
+  font-size: 0.9rem;
+  color: var(--gray-text);
+  margin-bottom: 28px;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--light-border);
+  overflow: hidden;
+}
+
+.role-option {
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid var(--light-border);
+  transition: background 0.2s ease;
+}
+
+.role-option:last-child {
+  border-right: none;
+}
+
+.role-option:hover {
+  background: var(--pink-bg);
+}
+
+.role-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--card-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.role-icon i {
+  font-size: 1.1rem;
+  color: var(--gray-text);
+}
+
+.role-option:hover .role-icon {
+  background: var(--pink-bg);
+}
+
+.role-option:hover .role-icon i {
+  color: var(--red);
+}
+
+.role-option h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.role-option p {
+  font-size: 0.78rem;
+  color: var(--gray-text);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  border-top: 1px solid var(--light-border);
+  padding: 24px 0;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand span {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--dark);
+  display: block;
+}
+
+.footer-brand p {
+  font-size: 0.78rem;
+  color: var(--gray-text);
+  margin-top: 4px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+}
+
+.footer-links a:hover {
+  color: var(--red);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 700px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role-option {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .role-option:last-child {
+    border-bottom: none;
+  }
+
+  .role-card {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 540px) {
+  .topbar-inner,
+  .footer-inner {
+    padding: 0 20px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    gap: 18px;
+  }
+}

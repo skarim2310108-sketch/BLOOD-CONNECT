@@ -1,0 +1,275 @@
+/* ==========================================================================
+   Blood Connect - adminportal.css
+   ========================================================================== */
+
+:root {
+  --red: #e02440;
+  --red-dark: #c81e3a;
+  --pink-bg: #fdeef0;
+  --dark: #1e2533;
+  --gray-text: #6b7280;
+  --light-border: #e5e7eb;
+  --light-gray: #f6f7fb;
+  --white: #ffffff;
+  --radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Page wrap / centering
+   ========================================================================== */
+
+.page-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+/* ==========================================================================
+   Login Card
+   ========================================================================== */
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  padding: 40px 48px;
+  text-align: center;
+}
+
+.login-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.login-icon i {
+  color: var(--white);
+  font-size: 1.2rem;
+}
+
+.login-card h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--dark);
+}
+
+.login-card .subtitle {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin-bottom: 28px;
+}
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+
+.login-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--dark);
+}
+
+.form-group label i {
+  color: var(--gray-text);
+  font-size: 0.85rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--light-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: var(--light-gray);
+  color: var(--dark);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #9aa1b1;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(224, 36, 64, 0.12);
+  background: var(--white);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+.forgot-link {
+  display: block;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--red);
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.change-role-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  text-decoration: none;
+}
+
+.change-role-link i {
+  font-size: 0.75rem;
+}
+
+.change-role-link:hover {
+  color: var(--dark);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  border-top: 1px solid var(--light-border);
+  padding: 24px 0;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand span {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--dark);
+  display: block;
+}
+
+.footer-brand p {
+  font-size: 0.78rem;
+  color: var(--gray-text);
+  margin-top: 4px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--red);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 540px) {
+  .login-card {
+    padding: 32px 24px;
+  }
+
+  .page-wrap {
+    padding: 40px 16px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    gap: 18px;
+  }
+}

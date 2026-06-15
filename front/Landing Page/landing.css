@@ -1,0 +1,511 @@
+/* ==========================================================================
+   Blood Connect - landing.css
+   ========================================================================== */
+
+:root {
+  --red: #e02440;
+  --red-dark: #c81e3a;
+  --emergency: #ff6a00;
+  --emergency-dark: #e85f00;
+  --pink-bg: #fdeef0;
+  --dark: #1e2533;
+  --gray-text: #6b7280;
+  --light-gray: #f6f7fb;
+  --white: #ffffff;
+  --radius: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--dark);
+  border-color: #d8dbe2;
+}
+
+.btn-outline:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn-light {
+  background: var(--white);
+  color: var(--red);
+}
+
+.btn-light:hover {
+  background: #f1f1f1;
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Emergency button */
+.btn-emergency {
+  background: var(--emergency);
+  color: var(--white);
+  position: relative;
+  animation: pulse-emergency 2s infinite;
+}
+
+.btn-emergency i {
+  font-size: 0.95rem;
+}
+
+.btn-emergency:hover {
+  background: var(--emergency-dark);
+}
+
+@keyframes pulse-emergency {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 106, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0);
+  }
+}
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+
+.navbar {
+  background: var(--white);
+  padding: 18px 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--dark);
+}
+
+.logo i {
+  color: var(--red);
+  font-size: 1.3rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--dark);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--red);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-actions .btn {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  background: var(--pink-bg);
+  padding: 64px 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.hero-content p {
+  color: var(--gray-text);
+  font-size: 1rem;
+  max-width: 480px;
+  margin-bottom: 28px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 56px;
+}
+
+.hero-stats h3 {
+  font-size: 1.8rem;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+
+.hero-stats p {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin: 0;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Why Choose Section
+   ========================================================================== */
+
+.why-choose {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.why-choose h2,
+.how-it-works h2 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: var(--gray-text);
+  margin-bottom: 48px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.feature-card {
+  padding: 24px;
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--pink-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.feature-icon i {
+  color: var(--red);
+  font-size: 1.4rem;
+}
+
+.feature-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: var(--gray-text);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   How It Works Section
+   ========================================================================== */
+
+.how-it-works {
+  background: var(--light-gray);
+  padding: 80px 0;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.step-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  text-align: left;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.step-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.step-card p {
+  color: var(--gray-text);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.step-link {
+  color: var(--red);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   CTA Section
+   ========================================================================== */
+
+.cta {
+  background: var(--red);
+  color: var(--white);
+  text-align: center;
+  padding: 80px 0;
+}
+
+.cta h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+}
+
+.cta p {
+  max-width: 600px;
+  margin: 0 auto 32px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  background: var(--dark);
+  color: #c8ccd6;
+  padding: 64px 0 0;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.footer-brand .logo {
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  color: #9aa1b1;
+  max-width: 280px;
+}
+
+.footer-links h4 {
+  color: var(--white);
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  color: #9aa1b1;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  padding: 24px 0;
+  font-size: 0.85rem;
+  color: #9aa1b1;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-image {
+    order: -1;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-stats {
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-actions .btn span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+  }
+}
