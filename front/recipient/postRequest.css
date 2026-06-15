@@ -1,0 +1,314 @@
+/* =============================================
+   post-request.css — Blood Connect Post Emergency Request
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --red-primary:  #C0152A;
+  --red-dark:     #96101F;
+  --red-light:    #FDECEA;
+  --red-mid:      #E8374A;
+  --white:        #FFFFFF;
+  --bg:           #F5F6FA;
+  --text-dark:    #1A1D23;
+  --text-mid:     #4B5263;
+  --text-soft:    #8A92A3;
+  --border:       #E2E5ED;
+  --shadow-card:  0 2px 12px rgba(0,0,0,0.07);
+  --radius:       14px;
+  --radius-sm:    9px;
+  --font:         'DM Sans', 'Segoe UI', sans-serif;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-dark);
+}
+
+/* =============================================
+   NAVBAR
+   ============================================= */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* Left — Back */
+.navbar .left a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.navbar .left a:hover {
+  color: var(--red-primary);
+}
+
+.navbar .left a i {
+  font-size: 14px;
+}
+
+/* Center — Logo */
+.navbar .center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.navbar .center .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.navbar .center .logo i {
+  color: var(--red-primary);
+  font-size: 20px;
+}
+
+.navbar .center p {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.04em;
+}
+
+/* Right — User */
+.navbar .right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.navbar .right strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+.navbar .right p {
+  font-size: 11.5px;
+  color: var(--text-soft);
+}
+
+/* =============================================
+   MAIN
+   ============================================= */
+.main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 60px;
+}
+
+.main h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+
+.main .subtitle {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+/* =============================================
+   FORM CARD
+   ============================================= */
+.form-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 32px 28px;
+}
+
+/* ── Section Title ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  margin-top: 32px;
+}
+
+.section-title:first-child {
+  margin-top: 0;
+}
+
+.section-title span {
+  width: 28px;
+  height: 28px;
+  background: var(--red-primary);
+  color: var(--white);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(192,21,42,0.25);
+}
+
+/* ── Form Grid ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.form-grid label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-bottom: 7px;
+}
+
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #FAFBFC;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-dark);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.form-grid input::placeholder {
+  color: var(--text-soft);
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px rgba(192,21,42,0.09);
+  background: var(--white);
+}
+
+/* Custom select arrow */
+.form-grid select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A92A3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+.form-grid select option {
+  color: var(--text-dark);
+}
+
+/* ── Divider between sections ── */
+.form-grid + .section-title {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+}
+
+/* ── Submit Button ── */
+.submit-btn {
+  display: block;
+  width: 100%;
+  margin-top: 32px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-mid) 100%);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(192,21,42,0.28);
+  letter-spacing: 0.01em;
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+}
+
+.submit-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(192,21,42,0.36);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 700px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .navbar .center p {
+    display: none;
+  }
+
+  .main {
+    padding: 28px 16px 40px;
+  }
+
+  .form-card {
+    padding: 22px 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid .full {
+    grid-column: 1;
+  }
+}

@@ -1,3 +1,4 @@
+<?php // recipient-post-request.php ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Post Emergency Request</title>
 
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="postRequest.css">
 </head>
 <body>
 
@@ -42,7 +41,6 @@
 
   <div class="form-card">
 
-    
     <div class="section-title">
       <span>1</span> Patient Information
     </div>
@@ -75,7 +73,6 @@
       </div>
     </div>
 
-    
     <div class="section-title">
       <span>2</span> Hospital & Location
     </div>
@@ -102,7 +99,6 @@
       </div>
     </div>
 
-    
     <button class="submit-btn">Submit Request</button>
 
   </div>

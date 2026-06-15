@@ -1,3 +1,4 @@
+<?php // recipient-dashboard.php ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blood Connect Dashboard</title>
 
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="reccipientDashboard.css">
 </head>
 <body>
 
@@ -43,10 +42,8 @@
   <h1>Welcome, Rahim</h1>
   <p class="subtitle">What would you like to do today?</p>
 
-  
   <div class="cards">
 
-    
     <div class="card">
       <div class="icon red"><i class="fa-regular fa-heart"></i></div>
       <h3>Post Emergency Request</h3>
@@ -54,7 +51,6 @@
       <button class="btn red">Post Request →</button>
     </div>
 
-    
     <div class="card">
       <div class="icon outline"><i class="fa-solid fa-magnifying-glass"></i></div>
       <h3>View Nearby Donors</h3>
@@ -64,7 +60,6 @@
 
   </div>
 
-  
   <div class="stats">
 
     <div class="stat-card">

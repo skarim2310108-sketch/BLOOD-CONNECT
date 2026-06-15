@@ -1,3 +1,7 @@
+/* =============================================
+   donor-style.css — Blood Connect Donor Login
+   ============================================= */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -5,242 +9,289 @@
 }
 
 :root {
-  --red:      #CC1F1F;
-  --red-dark: #A51818;
-  --text:     #1F2937;
-  --muted:    #6B7280;
-  --white:    #FFFFFF;
-  --bg:       #F5F5F5;
-  --border:   #E5E7EB;
-  --input-bg: #F9FAFB;
+  --red-primary:    #C0152A;
+  --red-dark:       #96101F;
+  --red-light:      #FDECEA;
+  --red-mid:        #E8374A;
+  --white:          #FFFFFF;
+  --bg:             #F5F6FA;
+  --text-dark:      #1A1D23;
+  --text-mid:       #4B5263;
+  --text-soft:      #8A92A3;
+  --border:         #E2E5ED;
+  --input-bg:       #FAFBFC;
+  --shadow-card:    0 8px 40px rgba(192,21,42,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-btn:     0 4px 16px rgba(192,21,42,0.30);
+  --radius-card:    20px;
+  --radius-input:   10px;
+  --radius-btn:     10px;
+  --font:           'DM Sans', sans-serif;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font);
   background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
+  color: var(--text-dark);
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
-
+/* ── Top Bar ── */
 .top-bar {
-  padding: 10px 24px;
   background: var(--white);
   border-bottom: 1px solid var(--border);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
 }
 
 .top-role {
-  font-size: 0.85rem;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--red-primary);
+  background: var(--red-light);
+  border: 1px solid rgba(192,21,42,0.15);
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-
+/* ── Main ── */
 .main {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 48px 16px;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, rgba(192,21,42,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 100%, rgba(192,21,42,0.05) 0%, transparent 70%),
+    var(--bg);
 }
 
-
+/* ── Login Card ── */
 .login-card {
   background: var(--white);
-  border-radius: 16px;
-  padding: 48px 44px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 44px 40px 36px;
   width: 100%;
-  max-width: 480px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  gap: 0;
 }
 
-
+/* ── Card Header ── */
 .card-header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   margin-bottom: 32px;
 }
 
 .brand-icon {
-  width: 48px;
-  height: 48px;
-  background: var(--red);
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-mid) 100%);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 20px rgba(192,21,42,0.30);
 }
 
 .card-title {
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--text-dark);
+  letter-spacing: -0.3px;
   margin-bottom: 6px;
 }
 
 .card-sub {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 14px;
+  color: var(--text-soft);
+  font-weight: 400;
 }
 
-
+/* ── Form ── */
 .form-group {
-  width: 100%;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .form-label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.88rem;
+  gap: 7px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: var(--text);
-  margin-bottom: 8px;
+  color: var(--text-mid);
 }
 
 .label-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--text);
+  width: 15px;
+  height: 15px;
+  color: var(--text-soft);
+  flex-shrink: 0;
 }
 
 .form-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-family: 'DM Sans', sans-serif;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-input);
   background: var(--input-bg);
-  color: var(--text);
+  font-family: var(--font);
+  font-size: 14.5px;
+  color: var(--text-dark);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
 
 .form-input::placeholder {
-  color: #C0C4CC;
+  color: var(--text-soft);
 }
 
 .form-input:focus {
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(204, 31, 31, 0.08);
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px rgba(192,21,42,0.09);
+  background: var(--white);
 }
 
-
+/* ── Sign In Button ── */
 .btn-signin {
   width: 100%;
   padding: 13px;
-  background: var(--red);
+  background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-mid) 100%);
   color: var(--white);
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  font-family: var(--font);
+  font-size: 15px;
   font-weight: 600;
-  font-family: 'DM Sans', sans-serif;
+  border: none;
+  border-radius: var(--radius-btn);
   cursor: pointer;
-  margin-top: 4px;
-  margin-bottom: 20px;
-  transition: background 0.2s;
+  margin-top: 6px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-btn);
+  letter-spacing: 0.01em;
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
 }
 
 .btn-signin:hover {
-  background: var(--red-dark);
+  opacity: 0.93;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(192,21,42,0.38);
 }
 
+.btn-signin:active {
+  transform: translateY(0);
+  opacity: 1;
+}
 
+/* ── Forgot Link ── */
 .forgot-link {
-  font-size: 0.88rem;
-  color: var(--red);
-  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--red-primary);
   font-weight: 500;
-  margin-bottom: 20px;
-  transition: opacity 0.2s;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.15s;
 }
 
 .forgot-link:hover {
-  opacity: 0.75;
+  color: var(--red-dark);
+  text-decoration: underline;
 }
 
-
+/* ── Change Role ── */
 .change-role {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.88rem;
-  color: var(--muted);
-  text-decoration: none;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
   font-weight: 500;
-  transition: color 0.2s;
+  color: var(--text-soft);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 
 .change-role:hover {
-  color: var(--text);
+  color: var(--red-primary);
+  border-color: rgba(192,21,42,0.25);
+  background: var(--red-light);
 }
 
-
+/* ── Footer ── */
 .footer {
+  background: var(--white);
   border-top: 1px solid var(--border);
-  padding: 20px 40px;
+  padding: 18px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  background: var(--white);
 }
 
 .footer-brand {
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
+  color: var(--red-primary);
+  margin-bottom: 3px;
 }
 
 .footer-copy {
-  font-size: 0.78rem;
-  color: var(--muted);
+  font-size: 12px;
+  color: var(--text-soft);
 }
 
 .footer-links {
   display: flex;
-  gap: 28px;
+  gap: 20px;
 }
 
 .footer-links a {
+  font-size: 12.5px;
+  color: var(--text-soft);
   text-decoration: none;
-  font-size: 0.83rem;
-  color: var(--text);
-  font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 
 .footer-links a:hover {
-  color: var(--red);
+  color: var(--red-primary);
 }
 
-
+/* ── Responsive ── */
 @media (max-width: 520px) {
   .login-card {
-    padding: 32px 20px;
+    padding: 32px 22px 28px;
   }
 
   .footer {
     flex-direction: column;
-    text-align: center;
-    padding: 20px;
+    align-items: flex-start;
+    padding: 16px 20px;
   }
 
   .footer-links {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+    gap: 14px;
   }
 }

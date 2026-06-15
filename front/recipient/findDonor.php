@@ -1,9 +1,10 @@
+<?php // recipient-donors.php ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Blood Connect - Donors</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="findDonor.css">
 </head>
 <body>
 
@@ -17,7 +18,6 @@
   <h1>View Nearby Donors</h1>
   <p class="subtitle">Find available blood donors near your location</p>
 
- 
   <div class="filters">
     <select>
       <option>All Blood Groups</option>
@@ -37,7 +37,6 @@
 
   <div class="main">
 
-    
     <div class="donor-list">
 
       <div class="card">
@@ -78,7 +77,6 @@
 
     </div>
 
-    
     <div class="map">
       <p>Interactive Map View (Coming Soon)</p>
     </div>
