@@ -27,11 +27,11 @@
         <a href="#how-it-works">How it Works</a>
       </nav>
       <div class="nav-actions">
-        <a href="#emergency" class="btn btn-emergency">
+        <a href="../recipient/postRequest.php" class="btn btn-emergency">
           <i class="fa-solid fa-truck-medical"></i>
           Emergency
         </a>
-        <a href="#login" class="btn btn-primary">Login</a>
+        <a href="../Role/role.php" class="btn btn-primary">Login</a>
       </div>
     </div>
   </header>
@@ -46,10 +46,10 @@
           emergency blood requests simple, fast, and reliable.
         </p>
         <div class="hero-buttons">
-          <a href="#donate" class="btn btn-primary">
+          <a href="../donor/register.php" class="btn btn-primary">
             Become a Donor <i class="fa-solid fa-arrow-right"></i>
           </a>
-          <a href="#request" class="btn btn-outline">Request Blood</a>
+          <a href="../recipient/register.php" class="btn btn-outline">Request Blood</a>
         </div>
         <div class="hero-stats">
           <div class="stat">
@@ -146,8 +146,8 @@
       <h2>Ready to Make a Difference?</h2>
       <p>Join thousands of donors who have already saved lives. Your blood can be someone's second chance at life.</p>
       <div class="cta-buttons">
-        <a href="#donate3" class="btn btn-light">Become a Donor Today</a>
-        <a href="#learn-more" class="btn btn-outline-light">Learn More</a>
+        <a href="../donor/register.php" class="btn btn-light">Become a Donor Today</a>
+        <a href="#how-it-works" class="btn btn-outline-light">Learn More</a>
       </div>
     </div>
   </section>
