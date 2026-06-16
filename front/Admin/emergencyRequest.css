@@ -527,3 +527,57 @@ a {
     gap: 16px;
   }
 }
+
+/* ==========================================================================
+   APPEND these rules to the bottom of your existing emergencyRequest.css
+   ========================================================================== */
+
+/* Approved / Rejected status badges (new — not in original CSS) */
+.badge-approved {
+  background: var(--green-bg);
+  color: var(--green-fg);
+}
+
+.badge-rejected {
+  background: var(--red-bg);
+  color: var(--red-fg);
+}
+
+/* Filter tabs as <a> links (override button default) */
+.filter-tabs .tab {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Empty state when no requests match the filter */
+.empty-state {
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius);
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--gray-text);
+}
+
+.empty-state i {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  display: block;
+  color: #c7ccd6;
+}
+
+.empty-state p {
+  font-size: 0.95rem;
+  text-transform: capitalize;
+}
+
+/* Action forms side-by-side (needed because forms wrap buttons) */
+.request-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.request-actions form {
+  margin: 0;
+}

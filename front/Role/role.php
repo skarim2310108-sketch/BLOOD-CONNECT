@@ -1,5 +1,14 @@
 <?php
-// role.php - Blood Connect Role Selection
+session_start();
+
+// If already logged in, redirect to their dashboard
+if (isset($_SESSION['user_id'], $_SESSION['role'])) {
+    switch ($_SESSION['role']) {
+        case 'admin':     header("Location: ../Admin/adminportal.php");         exit();
+        case 'donor':     header("Location: ../donor/donorDashboard.php");       exit();
+        case 'recipient': header("Location: ../recipient/recipientDashboard.php"); exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,20 +23,16 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
   <header class="topbar">
     <div class="topbar-inner">
       <a href="../Landing%20Page/index.php" class="btn btn-home">Home</a>
     </div>
   </header>
 
-  <!-- Main -->
   <div class="page-wrap">
 
     <div class="brand-block">
-      <div class="brand-icon">
-        <i class="fa-solid fa-droplet"></i>
-      </div>
+      <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
       <h1>Blood Connect</h1>
       <p class="brand-tagline">The Pulse of Precision</p>
     </div>
@@ -39,25 +44,19 @@
       <div class="role-grid">
 
         <a href="../Admin/adminportal.php" class="role-option">
-          <div class="role-icon">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
+          <div class="role-icon"><i class="fa-solid fa-shield-halved"></i></div>
           <h3>Admin</h3>
           <p>Manage requests &amp; inventory</p>
         </a>
 
         <a href="../donor/donor-login.php" class="role-option">
-          <div class="role-icon">
-            <i class="fa-solid fa-heart"></i>
-          </div>
+          <div class="role-icon"><i class="fa-solid fa-heart"></i></div>
           <h3>Donor</h3>
           <p>Manage your donations</p>
         </a>
 
         <a href="../recipient/recipient-login.php" class="role-option">
-          <div class="role-icon">
-            <i class="fa-solid fa-user-check"></i>
-          </div>
+          <div class="role-icon"><i class="fa-solid fa-user-check"></i></div>
           <h3>Recipient</h3>
           <p>Manage blood requests</p>
         </a>
@@ -67,7 +66,6 @@
 
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
