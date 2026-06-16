@@ -17,7 +17,7 @@
   <!-- Top Bar -->
   <header class="topbar">
     <div class="topbar-inner">
-      <a href="landing.php" class="btn btn-home">Home</a>
+      <a href="../Landing%20Page/index.php" class="btn btn-home">Home</a>
     </div>
   </header>
 
@@ -38,7 +38,7 @@
 
       <div class="role-grid">
 
-        <a href="adminportal.php" class="role-option">
+        <a href="../Admin/adminportal.php" class="role-option">
           <div class="role-icon">
             <i class="fa-solid fa-shield-halved"></i>
           </div>
@@ -46,7 +46,7 @@
           <p>Manage requests &amp; inventory</p>
         </a>
 
-        <a href="donor-login.php" class="role-option">
+        <a href="../donor/donor-login.php" class="role-option">
           <div class="role-icon">
             <i class="fa-solid fa-heart"></i>
           </div>
@@ -54,7 +54,7 @@
           <p>Manage your donations</p>
         </a>
 
-        <a href="recipient-login.php" class="role-option">
+        <a href="../recipient/recipient-login.php" class="role-option">
           <div class="role-icon">
             <i class="fa-solid fa-user-check"></i>
           </div>
