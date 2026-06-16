@@ -4,7 +4,7 @@ session_start();
 
 // ── DB CONFIG ──────────────────────────────────────────────────────────────
 $host   = 'localhost';
-$dbname = 'blood_connect';
+$dbname = 'bloodconnect';
 $dbuser = 'root';
 $dbpass = '';   // Default XAMPP password is empty
 
@@ -20,7 +20,7 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email']    ?? '');
-    $password = trim($_POST['password'] ?? '');
+    $password = $_POST['password'] ?? '';
 
     if (empty($email) || empty($password)) {
         $error = 'Please fill in both email and password.';

@@ -1,6 +1,9 @@
 <?php
-// db.php - Shared database connection for Blood Connect
-// Default XAMPP credentials: host=localhost, user=root, password=(empty), db=bloodconnect
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+define('BASE_URL', '/BLOOD-CONNECT');
 
 $host = 'localhost';
 $dbname = 'bloodconnect';
@@ -15,22 +18,25 @@ try {
     die("Database connection failed. Please make sure XAMPP MySQL is running and the database exists.<br>Error: " . $e->getMessage());
 }
 
-// Helper function to safely redirect
 function redirect($url) {
     header("Location: $url");
     exit;
 }
 
-// Helper function to check if recipient is logged in
 function requireRecipientLogin() {
     if (empty($_SESSION['recipient_id'])) {
-        redirect('recipient-login.php');
+        redirect(BASE_URL . '/recipient/recipient-login.php');
     }
 }
 
-// Helper function to check if donor is logged in
 function requireDonorLogin() {
     if (empty($_SESSION['donor_id'])) {
-        redirect('donor-login.php');
+        redirect(BASE_URL . '/donor/donor-login.php');
+    }
+}
+
+function requireAdminLogin() {
+    if (empty($_SESSION['admin_id'])) {
+        redirect(BASE_URL . '/Admin/adminportal.php');
     }
 }

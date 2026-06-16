@@ -63,12 +63,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .register-link a:hover {
             text-decoration: underline;
         }
+        .change-role {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 14px;
+            font-size: 13.5px;
+            color: var(--text-mid);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .change-role:hover {
+            color: var(--red-primary);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            
+
             <div class="logo">
                 <div class="icon">+</div>
             </div>
@@ -97,6 +111,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="#" class="forgot">Forgot password?</a>
 
             <p class="register-link">Don't have an account? <a href="register.php">Register</a></p>
+
+            <a href="../Role/role.php" class="change-role">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     width="16" height="16">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Change Role
+            </a>
+
         </div>
     </div>
 

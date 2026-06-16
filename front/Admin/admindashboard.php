@@ -4,7 +4,7 @@ session_start();
 
 // ─── DB Connection ───────────────────────────────────────────────
 $host = "localhost";
-$dbname = "blood_connect";
+$dbname = "bloodconnect";
 $username = "root";
 $password = "";
 
@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 
 // ─── Admin Auth Check ─────────────────────────────────────────────
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: adminlogin.php");
+    header("Location: adminportal.php");
     exit();
 }
 
