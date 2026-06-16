@@ -10,7 +10,7 @@ $dbpass = '';   // Default XAMPP password is empty
 
 // ── REDIRECT IF ALREADY LOGGED IN ─────────────────────────────────────────
 if (isset($_SESSION['admin_id'])) {
-    header('Location: admin_dashboard.php');
+    header('Location: admindashboard.php');
     exit;
 }
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_name']  = $admin['name'];
                 $_SESSION['admin_email'] = $admin['email'];
 
-                header('Location: admin_dashboard.php');
+                header('Location: admindashboard.php');
                 exit;
             } else {
                 $error = 'Invalid email or password. Please try again.';
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <a href="forgot_password.php" class="forgot-link">Forgot password?</a>
 
-      <a href="index.php" class="change-role-link">
+      <a href="../Role/role.php" class="change-role-link">
         <i class="fa-solid fa-chevron-left"></i> Change Role
       </a>
 
