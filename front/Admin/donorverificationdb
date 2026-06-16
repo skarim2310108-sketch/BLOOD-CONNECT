@@ -1,0 +1,25 @@
+<?php
+// db.php — Database connection (include this in every page)
+// Place this file one level above your public folder, or keep it
+// alongside your PHP files and protect it via .htaccess / deny from all.
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');        // XAMPP default
+define('DB_PASS', '');            // XAMPP default (empty)
+define('DB_NAME', 'blood_connect');
+define('DB_PORT', 3306);
+
+function db(): mysqli {
+    static $conn = null;
+    if ($conn === null) {
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+        if ($conn->connect_error) {
+            // In production, log this — never expose DB errors to the browser
+            error_log('DB connect error: ' . $conn->connect_error);
+            http_response_code(500);
+            die('Database connection failed.');
+        }
+        $conn->set_charset('utf8mb4');
+    }
+    return $conn;
+}
