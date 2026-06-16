@@ -12,13 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $blood_group = trim($_POST['blood_group'] ?? '');
     $district = trim($_POST['district'] ?? '');
     $address = trim($_POST['address'] ?? '');
+    $first_time_donor = $_POST['first_time_donor'] ?? '';
     $last_donation_date = $_POST['last_donation_date'] ?? '';
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
     if (empty($name) || empty($email) || empty($phone) || empty($blood_group) || empty($district) || empty($password)) {
         $error = "Please fill in all required fields.";
-    } elseif ($last_donation_date !== '' && $last_donation_date > date('Y-m-d')) {
+    } elseif (!in_array($first_time_donor, ['yes', 'no'], true)) {
+        $error = "Please select whether you are a first time donor.";
+    } elseif ($first_time_donor !== 'yes' && $last_donation_date !== '' && $last_donation_date > date('Y-m-d')) {
         $error = "Last donation date cannot be in the future.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
@@ -34,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $blood_group,
                 $district,
                 $address,
-                $last_donation_date === '' ? null : $last_donation_date,
+                ($first_time_donor === 'yes' || $last_donation_date === '') ? null : $last_donation_date,
                 password_hash($password, PASSWORD_DEFAULT)
             ]);
             $success = "Registration successful! You can now sign in.";
@@ -224,6 +227,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
           <label class="form-label">
             <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C12 2 5 10.5 5 15.5C5 19.09 8.13 22 12 22C15.87 22 19 19.09 19 15.5C19 10.5 12 2 12 2Z"/>
+              <line x1="12" y1="10" x2="12" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="9"  y1="13" x2="15" y2="13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            First Time Donor *
+          </label>
+          <div class="radio-group" style="display:flex; gap:20px; margin-top:8px;">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:500; cursor:pointer;">
+              <input type="radio" name="first_time_donor" value="yes" <?php if(($_POST['first_time_donor'] ?? '') === 'yes') echo 'checked'; ?> onchange="toggleLastDonationDate()" required> Yes
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-weight:500; cursor:pointer;">
+              <input type="radio" name="first_time_donor" value="no" <?php if(($_POST['first_time_donor'] ?? '') === 'no') echo 'checked'; ?> onchange="toggleLastDonationDate()" required> No
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
               <line x1="16" y1="2" x2="16" y2="6"/>
               <line x1="8" y1="2" x2="8" y2="6"/>
@@ -231,9 +253,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </svg>
             Last Donation Date
           </label>
-          <input type="date" name="last_donation_date" class="form-input" value="<?php echo htmlspecialchars($_POST['last_donation_date'] ?? ''); ?>">
+          <input type="date" name="last_donation_date" id="last_donation_date" class="form-input" value="<?php echo htmlspecialchars($_POST['last_donation_date'] ?? ''); ?>">
           <small style="display:block; margin-top:6px; color:var(--text-soft); font-size:12px;">Select the date of your most recent blood donation, if any.</small>
         </div>
+
+        <script>
+          function toggleLastDonationDate() {
+            const isFirstTime = document.querySelector('input[name="first_time_donor"]:checked').value === 'yes';
+            const dateField = document.getElementById('last_donation_date');
+            dateField.disabled = isFirstTime;
+            if (isFirstTime) {
+              dateField.value = '';
+            }
+          }
+          // Run on page load to handle validation error repopulation
+          document.addEventListener('DOMContentLoaded', toggleLastDonationDate);
+        </script>
 
         <div class="form-group">
           <label class="form-label">
