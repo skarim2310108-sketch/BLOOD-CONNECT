@@ -12,18 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $blood_group = trim($_POST['blood_group'] ?? '');
     $district = trim($_POST['district'] ?? '');
     $address = trim($_POST['address'] ?? '');
+    $last_donation_date = $_POST['last_donation_date'] ?? '';
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
     if (empty($name) || empty($email) || empty($phone) || empty($blood_group) || empty($district) || empty($password)) {
         $error = "Please fill in all required fields.";
+    } elseif ($last_donation_date !== '' && $last_donation_date > date('Y-m-d')) {
+        $error = "Last donation date cannot be in the future.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } elseif (strlen($password) < 6) {
         $error = "Password must be at least 6 characters.";
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO donors (name, email, phone, blood_group, district, address, password) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO donors (name, email, phone, blood_group, district, address, last_donation_date, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?)");
             $stmt->execute([
                 $name,
                 $email,
@@ -31,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $blood_group,
                 $district,
                 $address,
+                $last_donation_date === '' ? null : $last_donation_date,
                 password_hash($password, PASSWORD_DEFAULT)
             ]);
             $success = "Registration successful! You can now sign in.";
@@ -215,6 +219,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Address
           </label>
           <input type="text" name="address" class="form-input" placeholder="Area / Thana / Street" value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Last Donation Date
+          </label>
+          <input type="date" name="last_donation_date" class="form-input" value="<?php echo htmlspecialchars($_POST['last_donation_date'] ?? ''); ?>">
+          <small style="display:block; margin-top:6px; color:var(--text-soft); font-size:12px;">Select the date of your most recent blood donation, if any.</small>
         </div>
 
         <div class="form-group">

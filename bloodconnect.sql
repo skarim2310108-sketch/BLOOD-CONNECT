@@ -92,7 +92,9 @@ CREATE TABLE `donors` (
   `blood_group` varchar(5) NOT NULL,
   `district` varchar(50) NOT NULL,
   `address` text DEFAULT NULL,
-  `status` enum('available','unavailable') DEFAULT 'available',
+  `status` enum('pending','verified','rejected','available','unavailable') DEFAULT 'pending',
+  `reviewed_at` timestamp NULL DEFAULT NULL,
+  `last_donation_date` date DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -101,14 +103,14 @@ CREATE TABLE `donors` (
 -- Dumping data for table `donors`
 --
 
-INSERT INTO `donors` (`id`, `name`, `email`, `phone`, `blood_group`, `district`, `address`, `status`, `password`, `created_at`) VALUES
-(1, 'Rahim Uddin', 'rahim@example.com', '01711111111', 'B+', 'Dhaka', 'Mirpur, Dhaka', 'available', '$2y$10$m6F.Gqg9D0wsuNSnWcButeC9afUhMSbntOlEw2cqsroZPtrsrN75y', '2026-06-15 13:27:50'),
-(2, 'Fatema Begum', 'fatema@example.com', '01822222222', 'A-', 'Dhaka', 'Dhanmondi, Dhaka', 'available', '$2y$10$6WfkMRKazu1HhOGEqYqSZOKfkTwYAX2MLg2I0XndI.dfDMxM4fGlG', '2026-06-15 13:27:50'),
-(3, 'Kamal Hossain', 'kamal@example.com', '01933333333', 'O+', 'Dhaka', 'Uttara, Dhaka', 'available', '$2y$10$BK46YUSEZXqHplvOVEb6g.ptGUTfWgfoaTUcS4XhpuOuiaJzEGwR2', '2026-06-15 13:27:50'),
-(4, 'Nusrat Jahan', 'nusrat@example.com', '01644444444', 'AB+', 'Chittagong', 'Agrabad, Chittagong', 'available', '$2y$10$e5hwSmIDndIhvCp9d2Y3ue.QbPG2dF0UYQpfjpvHejwyMSbmVztLy', '2026-06-15 13:27:50'),
-(5, 'Sabbir Rahman', 'sabbir@example.com', '01555555555', 'A+', 'Rajshahi', 'Shaheb Bazar, Rajshahi', 'available', '$2y$10$sV3q.sRnouAHhCS71MCz8.GIjQxLk1uNWoR5cK2Lq/tGztk5esyKi', '2026-06-15 13:27:50'),
-(6, 'Test Donor', 'testdonor@example.com', '01711111111', 'B', 'Dhaka', 'Mirpur', 'available', '$2y$10$QNb9FjF7F6/dGYtJOFN5Ru0OpnSFUL.ndKm1NdKcUQ7QdSwQYLyHC', '2026-06-15 14:31:17'),
-(7, 'nahid', 'nahid@gmail.com', '01679217777', 'A+', 'Dhaka', 'Dhaka Bangladesh', 'available', '$2y$10$m45.b0YGf5PvFPKGVKPpQ.4TITHndF9s39BUEa9hENO1OZGpshYX2', '2026-06-15 14:40:16');
+INSERT INTO `donors` (`id`, `name`, `email`, `phone`, `blood_group`, `district`, `address`, `status`, `reviewed_at`, `last_donation_date`, `password`, `created_at`) VALUES
+(1, 'Rahim Uddin', 'rahim@example.com', '01711111111', 'B+', 'Dhaka', 'Mirpur, Dhaka', 'pending', NULL, NULL, '$2y$10$m6F.Gqg9D0wsuNSnWcButeC9afUhMSbntOlEw2cqsroZPtrsrN75y', '2026-06-15 13:27:50'),
+(2, 'Fatema Begum', 'fatema@example.com', '01822222222', 'A-', 'Dhaka', 'Dhanmondi, Dhaka', 'pending', NULL, NULL, '$2y$10$6WfkMRKazu1HhOGEqYqSZOKfkTwYAX2MLg2I0XndI.dfDMxM4fGlG', '2026-06-15 13:27:50'),
+(3, 'Kamal Hossain', 'kamal@example.com', '01933333333', 'O+', 'Dhaka', 'Uttara, Dhaka', 'pending', NULL, NULL, '$2y$10$BK46YUSEZXqHplvOVEb6g.ptGUTfWgfoaTUcS4XhpuOuiaJzEGwR2', '2026-06-15 13:27:50'),
+(4, 'Nusrat Jahan', 'nusrat@example.com', '01644444444', 'AB+', 'Chittagong', 'Agrabad, Chittagong', 'pending', NULL, NULL, '$2y$10$e5hwSmIDndIhvCp9d2Y3ue.QbPG2dF0UYQpfjpvHejwyMSbmVztLy', '2026-06-15 13:27:50'),
+(5, 'Sabbir Rahman', 'sabbir@example.com', '01555555555', 'A+', 'Rajshahi', 'Shaheb Bazar, Rajshahi', 'pending', NULL, NULL, '$2y$10$sV3q.sRnouAHhCS71MCz8.GIjQxLk1uNWoR5cK2Lq/tGztk5esyKi', '2026-06-15 13:27:50'),
+(6, 'Test Donor', 'testdonor@example.com', '01711111111', 'B', 'Dhaka', 'Mirpur', 'pending', NULL, NULL, '$2y$10$QNb9FjF7F6/dGYtJOFN5Ru0OpnSFUL.ndKm1NdKcUQ7QdSwQYLyHC', '2026-06-15 14:31:17'),
+(7, 'nahid', 'nahid@gmail.com', '01679217777', 'A+', 'Dhaka', 'Dhaka Bangladesh', 'pending', NULL, NULL, '$2y$10$m45.b0YGf5PvFPKGVKPpQ.4TITHndF9s39BUEa9hENO1OZGpshYX2', '2026-06-15 14:40:16');
 
 -- --------------------------------------------------------
 

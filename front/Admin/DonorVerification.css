@@ -435,6 +435,13 @@ a {
   background: var(--green-dark);
 }
 
+.btn-verify:disabled,
+.btn-verify.disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
 /* ==========================================================================
    Responsive
    ========================================================================== */

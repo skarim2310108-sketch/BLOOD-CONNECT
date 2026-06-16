@@ -4,11 +4,51 @@
 //  Combined backend + frontend
 // ============================================================
 session_start();
-require_once 'donarverificationdb.php';
+require_once '../db.php';
 
 // ============================================================
 //  BACKEND — Handle POST actions (Verify / Reject)
 // ============================================================
+function donation_eligibility(?string $lastDonationDate): array {
+    if (!$lastDonationDate) {
+        return [
+            'eligible'       => true,
+            'days_since'     => null,
+            'days_remaining' => 0,
+            'message'        => 'First-time donor — eligible'
+        ];
+    }
+    try {
+        $last = new DateTime($lastDonationDate);
+        $today = new DateTime('today');
+        if ($last > $today) {
+            return [
+                'eligible'       => false,
+                'days_since'     => null,
+                'days_remaining' => null,
+                'message'        => 'Invalid: last donation date is in the future'
+            ];
+        }
+        $days_since = (int)$last->diff($today)->format('%a');
+        $days_remaining = max(0, 90 - $days_since);
+        return [
+            'eligible'       => $days_since >= 90,
+            'days_since'     => $days_since,
+            'days_remaining' => $days_remaining,
+            'message'        => $days_since >= 90
+                ? "Eligible ({$days_since} days since last donation)"
+                : "Not eligible — only {$days_since} days since last donation ({$days_remaining} days left)"
+        ];
+    } catch (Exception $e) {
+        return [
+            'eligible'       => false,
+            'days_since'     => null,
+            'days_remaining' => null,
+            'message'        => 'Invalid last donation date'
+        ];
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action    = $_POST['action']    ?? '';
     $donor_id  = (int)($_POST['donor_id'] ?? 0);
@@ -16,6 +56,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $allowed_actions = ['verify', 'reject'];
 
     if ($donor_id > 0 && in_array($action, $allowed_actions, true)) {
+        // Enforce the 90-day donation cycle before verifying a donor
+        if ($action === 'verify') {
+            $checkStmt = db()->prepare("SELECT last_donation_date FROM donors WHERE id = ?");
+            $checkStmt->bind_param('i', $donor_id);
+            $checkStmt->execute();
+            $donorRow = $checkStmt->get_result()->fetch_assoc();
+            $checkStmt->close();
+
+            $eligibility = donation_eligibility($donorRow['last_donation_date'] ?? null);
+            if (!$eligibility['eligible']) {
+                $qs = isset($_GET['tab']) ? '?tab=' . urlencode($_GET['tab']) : '';
+                header('Location: donorverification.php' . $qs . ($qs ? '&' : '?') . 'error=' . urlencode($eligibility['message']));
+                exit;
+            }
+        }
+
         $new_status = ($action === 'verify') ? 'verified' : 'rejected';
 
         $stmt = db()->prepare(
@@ -116,7 +172,7 @@ function e(string $s): string {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="donorvarification.css">
+  <link rel="stylesheet" href="DonorVerification.css">
   <style>
     /* Extra status badge colours not in the original CSS */
     .badge-verified { background: var(--green-bg); color: var(--green-fg); }
@@ -251,9 +307,6 @@ function e(string $s): string {
         </div>
       <?php else: ?>
         <?php foreach ($donors as $d): ?>
-          <?php
-            $is_expired  = !empty($d['nid_expiry']) && strtotime($d['nid_expiry']) < time();
-          ?>
           <div class="donor-card">
 
             <!-- Blood group badge -->
@@ -264,34 +317,39 @@ function e(string $s): string {
             <!-- Donor info -->
             <div class="donor-info">
               <div class="donor-name-row">
-                <h3><?= e($d['full_name']) ?></h3>
+                <h3><?= e($d['name']) ?></h3>
                 <?= status_badge($d['status']) ?>
               </div>
 
               <div class="donor-details">
                 <div class="detail">
                   <span class="detail-label">Donor ID</span>
-                  <span class="detail-value"><?= e($d['donor_id']) ?></span>
+                  <span class="detail-value"><?= e($d['id']) ?></span>
                 </div>
                 <div class="detail">
-                  <span class="detail-label">Age</span>
-                  <span class="detail-value"><?= (int)$d['age'] ?></span>
+                  <span class="detail-label">Phone</span>
+                  <span class="detail-value"><?= e($d['phone']) ?></span>
+                </div>
+                <div class="detail">
+                  <span class="detail-label">District</span>
+                  <span class="detail-value"><?= e($d['district']) ?></span>
                 </div>
                 <div class="detail">
                   <span class="detail-label">Registered</span>
-                  <span class="detail-value"><?= fmt_date($d['registered_at']) ?></span>
+                  <span class="detail-value"><?= fmt_date($d['created_at']) ?></span>
                 </div>
-                <?php if (!empty($d['nid_expiry'])): ?>
-                <div class="detail">
-                  <span class="detail-label">NID Expiry</span>
-                  <span class="detail-value <?= $is_expired ? 'text-danger' : '' ?>">
-                    <?= fmt_date($d['nid_expiry']) ?>
-                  </span>
-                </div>
-                <?php endif; ?>
                 <div class="detail">
                   <span class="detail-label">Last Donation</span>
-                  <span class="detail-value"><?= fmt_date($d['last_donation']) ?></span>
+                  <span class="detail-value"><?= fmt_date($d['last_donation_date']) ?></span>
+                </div>
+                <?php $eligibility = donation_eligibility($d['last_donation_date'] ?? null); ?>
+                <div class="detail" style="grid-column: 1 / -1;">
+                  <span class="detail-label">Eligibility</span>
+                  <span class="detail-value">
+                    <span class="badge <?= $eligibility['eligible'] ? 'badge-verified' : 'badge-rejected' ?>">
+                      <?= e($eligibility['message']) ?>
+                    </span>
+                  </span>
                 </div>
               </div>
 
@@ -303,21 +361,27 @@ function e(string $s): string {
 
             <!-- Actions — only show for pending donors -->
             <?php if ($d['status'] === 'pending'): ?>
+            <?php $eligibility = donation_eligibility($d['last_donation_date'] ?? null); ?>
             <div class="donor-actions">
               <!-- Reject -->
               <form method="POST" action="donorverification.php?tab=<?= e($active_tab) ?>"
-                    onsubmit="return confirmAction('reject', '<?= e($d['full_name']) ?>')">
+                    onsubmit="return confirmAction('reject', '<?= e($d['name']) ?>')">
                 <input type="hidden" name="action"    value="reject">
                 <input type="hidden" name="donor_id"  value="<?= (int)$d['id'] ?>">
                 <button type="submit" class="btn btn-reject">Reject</button>
               </form>
 
-              <!-- Verify -->
+              <!-- Verify (disabled when 90-day cycle is not complete) -->
               <form method="POST" action="donorverification.php?tab=<?= e($active_tab) ?>"
-                    onsubmit="return confirmAction('verify', '<?= e($d['full_name']) ?>')">
+                    onsubmit="return confirmAction('verify', '<?= e($d['name']) ?>')">
                 <input type="hidden" name="action"    value="verify">
                 <input type="hidden" name="donor_id"  value="<?= (int)$d['id'] ?>">
-                <button type="submit" class="btn btn-verify">Verify</button>
+                <?php if ($eligibility['eligible']): ?>
+                  <button type="submit" class="btn btn-verify">Verify</button>
+                <?php else: ?>
+                  <button type="button" class="btn btn-verify" disabled
+                          title="<?= e($eligibility['message']) ?>">Verify</button>
+                <?php endif; ?>
               </form>
             </div>
             <?php endif; ?>
@@ -343,11 +407,16 @@ function e(string $s): string {
 
   // Simple toast for any URL param feedback (optional extension)
   const params = new URLSearchParams(location.search);
+  const toast = document.getElementById('toast');
   if (params.get('success')) {
-    const toast = document.getElementById('toast');
     toast.textContent = decodeURIComponent(params.get('success'));
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
+  } else if (params.get('error')) {
+    toast.textContent = decodeURIComponent(params.get('error'));
+    toast.style.background = 'var(--red)';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
   }
 </script>
 
