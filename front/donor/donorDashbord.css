@@ -25,6 +25,8 @@
   --shadow-card:   0 2px 12px rgba(0,0,0,0.07);
   --radius-card:   14px;
   --font:          'DM Sans', sans-serif;
+  --yellow-bg:     #fdf3d3;
+  --yellow-fg:     #e0ad1c;
 
   --sidebar-w: 240px;
 }
@@ -699,6 +701,27 @@ body {
   color: var(--text-soft);
   border-color: var(--border);
   cursor: not-allowed;
+}
+
+.req-status-badge {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 7px 16px;
+  border: 1.5px solid transparent;
+}
+
+.req-status-badge.pending {
+  background: var(--yellow-bg, #fdf3d3);
+  color: var(--yellow-fg, #e0ad1c);
+  border-color: var(--yellow-bg, #fdf3d3);
+}
+
+.req-status-badge.rejected {
+  background: var(--red-bg, #fbe1e4);
+  color: var(--red-fg, #e02440);
+  border-color: var(--red-bg, #fbe1e4);
 }
 
 /* =============================================

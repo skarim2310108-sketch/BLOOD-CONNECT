@@ -12,16 +12,21 @@ $donorDistrict = $_SESSION['donor_district'];
 $stmt = $pdo->prepare("SELECT * FROM donors WHERE id = ?");
 $stmt->execute([$donorId]);
 $donor = $stmt->fetch();
+$donorStatus = $donor['status'] ?? 'pending';
 
 // Fetch total donations
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM donations WHERE donor_id = ? AND status = 'completed'");
 $stmt->execute([$donorId]);
 $totalDonations = $stmt->fetchColumn();
 
-// Fetch last donation
+// Fetch last donation from both donors.last_donation_date and completed donations
+$lastDonation = $donor['last_donation_date'] ?? null;
 $stmt = $pdo->prepare("SELECT donation_date FROM donations WHERE donor_id = ? AND status = 'completed' ORDER BY donation_date DESC LIMIT 1");
 $stmt->execute([$donorId]);
-$lastDonation = $stmt->fetchColumn();
+$donationDate = $stmt->fetchColumn();
+if ($donationDate && (!$lastDonation || $donationDate > $lastDonation)) {
+    $lastDonation = $donationDate;
+}
 
 // Calculate eligibility
 $today = new DateTime();
@@ -35,7 +40,6 @@ if ($lastDonation) {
     $lastDate = new DateTime($lastDonation);
     $nextEligible = clone $lastDate;
     $nextEligible->modify('+90 days');
-    $interval = $today->diff($nextEligible);
     $daysRemaining = (int)$today->diff($nextEligible)->format('%r%a');
 
     if ($daysRemaining > 0) {
@@ -45,8 +49,20 @@ if ($lastDonation) {
     }
 }
 
+// Override status text based on admin verification status
+if ($donorStatus === 'pending') {
+    $statusText = 'Pending';
+    $statusClass = 'orange-text';
+} elseif (!$eligible) {
+    $statusText = 'Cooling Period';
+    $statusClass = 'red-text';
+}
+
 $nextEligibleText = $nextEligible ? $nextEligible->format('M d, Y') : 'Now';
 $lastDonationText = $lastDonation ? date('M d, Y', strtotime($lastDonation)) : 'No donations yet';
+
+// Donor can only accept requests if verified/available AND eligible
+$canAcceptRequests = in_array($donorStatus, ['verified', 'available'], true) && $eligible;
 
 // Progress bar width
 $progressWidth = 0;
@@ -83,13 +99,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'])) {
         $stmt->execute([$requestId]);
         $request = $stmt->fetch();
 
-        if ($request && $eligible) {
+        if ($request && $donorStatus !== 'pending' && $eligible) {
             try {
                 $pdo->beginTransaction();
 
                 // Create donation record
                 $stmt = $pdo->prepare("INSERT INTO donations (donor_id, request_id, donation_date, location, blood_group, units, status) VALUES (?, ?, CURDATE(), ?, ?, ?, 'completed')");
                 $stmt->execute([$donorId, $requestId, $request['hospital'], $request['blood_group'], $request['units']]);
+
+                // Update donor's last donation date to today
+                $stmt = $pdo->prepare("UPDATE donors SET last_donation_date = CURDATE() WHERE id = ?");
+                $stmt->execute([$donorId]);
 
                 // Mark request as fulfilled
                 $stmt = $pdo->prepare("UPDATE blood_requests SET status = 'fulfilled' WHERE id = ?");
@@ -106,7 +126,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'])) {
                 $message = 'Failed to accept request: ' . $e->getMessage();
             }
         } else {
-            $message = 'You are not eligible to donate yet. Cooling period active.';
+            if ($donorStatus === 'pending') {
+                $message = 'Your account is pending admin approval. You cannot accept requests yet.';
+            } else {
+                $message = 'You are not eligible to donate yet. Cooling period active.';
+            }
         }
     }
 }
@@ -151,6 +175,8 @@ $compatibleRecipients = [
     }
     .nav-item { border: none; background: transparent; width: 100%; text-align: left; cursor: pointer; }
     .green-text { color: #16A34A; }
+    .red-text { color: #e02440; }
+    .orange-text { color: #f0883e; }
   </style>
 </head>
 <body>
@@ -321,12 +347,18 @@ $compatibleRecipients = [
                     </div>
                   </div>
                   <div class="req-actions">
-                    <form method="POST" action="" style="display:flex;gap:8px;">
-                      <input type="hidden" name="request_id" value="<?php echo $req['id']; ?>">
-                      <button type="submit" name="action" value="decline" class="req-decline">Decline</button>
-                      <button type="submit" name="action" value="accept" class="req-accept <?php echo !$eligible ? 'disabled' : ''; ?>" <?php echo !$eligible ? 'disabled' : ''; ?>>Accept Request</button>
-                    </form>
-                  </div>
+                  <?php
+                    $acceptDisabled = $donorStatus === 'pending' || !$eligible;
+                    $acceptTitle = $donorStatus === 'pending'
+                      ? 'Your account is pending admin approval.'
+                      : (!$eligible ? 'Cooling period active.' : '');
+                  ?>
+                  <form method="POST" action="" style="display:flex;gap:8px;">
+                    <input type="hidden" name="request_id" value="<?php echo $req['id']; ?>">
+                    <button type="submit" name="action" value="decline" class="req-decline">Decline</button>
+                    <button type="submit" name="action" value="accept" class="req-accept <?php echo $acceptDisabled ? 'disabled' : ''; ?>" <?php echo $acceptDisabled ? 'disabled' : ''; ?> title="<?php echo htmlspecialchars($acceptTitle); ?>">Accept Request</button>
+                  </form>
+                </div>
                 </div>
               <?php endforeach; ?>
             <?php else: ?>

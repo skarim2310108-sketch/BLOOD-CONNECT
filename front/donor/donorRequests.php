@@ -12,11 +12,16 @@ $donorDistrict = $_SESSION['donor_district'];
 $stmt = $pdo->prepare("SELECT * FROM donors WHERE id = ?");
 $stmt->execute([$donorId]);
 $donor = $stmt->fetch();
+$donorStatus = $donor['status'] ?? 'pending';
 
-// Calculate eligibility
+// Calculate eligibility using both donors.last_donation_date and completed donations
+$lastDonation = $donor['last_donation_date'] ?? null;
 $stmt = $pdo->prepare("SELECT donation_date FROM donations WHERE donor_id = ? AND status = 'completed' ORDER BY donation_date DESC LIMIT 1");
 $stmt->execute([$donorId]);
-$lastDonation = $stmt->fetchColumn();
+$donationDate = $stmt->fetchColumn();
+if ($donationDate && (!$lastDonation || $donationDate > $lastDonation)) {
+    $lastDonation = $donationDate;
+}
 
 $eligible = true;
 if ($lastDonation) {
@@ -28,6 +33,9 @@ if ($lastDonation) {
         $eligible = false;
     }
 }
+
+// Donor can only accept requests if verified/available AND eligible
+$canAcceptRequests = in_array($donorStatus, ['verified', 'available'], true) && $eligible;
 
 // Fetch pending requests
 $stmt = $pdo->prepare("SELECT * FROM blood_requests 
@@ -49,11 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'])) {
         $stmt->execute([$requestId]);
         $request = $stmt->fetch();
 
-        if ($request && $eligible) {
+        if ($request && $donorStatus !== 'pending' && $eligible) {
             try {
                 $pdo->beginTransaction();
                 $stmt = $pdo->prepare("INSERT INTO donations (donor_id, request_id, donation_date, location, blood_group, units, status) VALUES (?, ?, CURDATE(), ?, ?, ?, 'completed')");
                 $stmt->execute([$donorId, $requestId, $request['hospital'], $request['blood_group'], $request['units']]);
+
+                // Update donor's last donation date to today
+                $stmt = $pdo->prepare("UPDATE donors SET last_donation_date = CURDATE() WHERE id = ?");
+                $stmt->execute([$donorId]);
+
                 $stmt = $pdo->prepare("UPDATE blood_requests SET status = 'fulfilled' WHERE id = ?");
                 $stmt->execute([$requestId]);
                 $pdo->commit();
@@ -64,7 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'])) {
                 $message = 'Failed to accept request: ' . $e->getMessage();
             }
         } else {
-            $message = 'You are not eligible to donate yet. Cooling period active.';
+            if ($donorStatus === 'pending') {
+                $message = 'Your account is pending admin approval. You cannot accept requests yet.';
+            } else {
+                $message = 'You are not eligible to donate yet. Cooling period active.';
+            }
         }
     }
 }
@@ -175,10 +192,16 @@ if (isset($_GET['msg'])) {
                   </div>
                 </div>
                 <div class="req-actions">
+                  <?php
+                    $acceptDisabled = $donorStatus === 'pending' || !$eligible;
+                    $acceptTitle = $donorStatus === 'pending'
+                      ? 'Your account is pending admin approval.'
+                      : (!$eligible ? 'Cooling period active.' : '');
+                  ?>
                   <form method="POST" action="" style="display:flex;gap:8px;">
                     <input type="hidden" name="request_id" value="<?php echo $req['id']; ?>">
                     <button type="submit" name="action" value="decline" class="req-decline">Decline</button>
-                    <button type="submit" name="action" value="accept" class="req-accept <?php echo !$eligible ? 'disabled' : ''; ?>" <?php echo !$eligible ? 'disabled' : ''; ?>>Accept Request</button>
+                    <button type="submit" name="action" value="accept" class="req-accept <?php echo $acceptDisabled ? 'disabled' : ''; ?>" <?php echo $acceptDisabled ? 'disabled' : ''; ?> title="<?php echo htmlspecialchars($acceptTitle); ?>">Accept Request</button>
                   </form>
                 </div>
               </div>
