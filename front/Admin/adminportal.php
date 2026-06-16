@@ -3,10 +3,7 @@
 session_start();
 
 // ── DB CONFIG ──────────────────────────────────────────────────────────────
-$host   = 'localhost';
-$dbname = 'blood_connect';
-$dbuser = 'root';
-$dbpass = '';   // Default XAMPP password is empty
+require_once '../db.php';
 
 // ── REDIRECT IF ALREADY LOGGED IN ─────────────────────────────────────────
 if (isset($_SESSION['admin_id'])) {
@@ -28,16 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please enter a valid email address.';
     } else {
         try {
-            $pdo = new PDO(
-                "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-                $dbuser,
-                $dbpass,
-                [
-                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES   => false,
-                ]
-            );
+            // Uses $pdo from ../db.php
 
             $stmt = $pdo->prepare("SELECT * FROM admins WHERE email = ? LIMIT 1");
             $stmt->execute([$email]);

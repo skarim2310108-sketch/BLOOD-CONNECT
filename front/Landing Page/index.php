@@ -27,7 +27,7 @@
         <a href="#how-it-works">How it Works</a>
       </nav>
       <div class="nav-actions">
-        <a href="../recipient/postRequest.php" class="btn btn-emergency">
+        <a href="../recipient/findDonor.php" class="btn btn-emergency">
           <i class="fa-solid fa-truck-medical"></i>
           Emergency
         </a>

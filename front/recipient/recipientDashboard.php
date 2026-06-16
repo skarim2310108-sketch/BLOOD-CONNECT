@@ -12,7 +12,7 @@ $stmt->execute([$recipientId]);
 $activeRequests = $stmt->fetchColumn();
 
 // Fetch available donors count
-$stmt = $pdo->query("SELECT COUNT(*) FROM donors WHERE status = 'available'");
+$stmt = $pdo->query("SELECT COUNT(*) FROM donors WHERE status IN ('available', 'verified')");
 $availableDonors = $stmt->fetchColumn();
 ?>
 <!DOCTYPE html>

@@ -3,15 +3,8 @@
 session_start();
 
 // ─── DB Connection ───────────────────────────────────────────────
-$host = "localhost";
-$dbname = "blood_connect";
-$username = "root";
-$password = "";
-
-$conn = new mysqli($host, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+require_once '../db.php';
+$conn = db();
 
 // ─── Admin Auth Check ─────────────────────────────────────────────
 if (!isset($_SESSION['admin_id'])) {
@@ -55,13 +48,13 @@ $total_requests = $conn->query(
 
 // ─── Recent Activity (last 5 donors) ─────────────────────────────
 $recent_donors = $conn->query(
-    "SELECT full_name, blood_type, status, created_at 
+    "SELECT name, blood_group, status, created_at 
      FROM donors 
      ORDER BY created_at DESC 
      LIMIT 5"
 );
 
-$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,10 +85,10 @@ $conn->close();
         <a href="admindashboard.php" class="nav-item active">
           <i class="fa-solid fa-grip"></i> Dashboard
         </a>
-        <a href="donor-verification.php" class="nav-item">
+        <a href="donorverification.php" class="nav-item">
           <i class="fa-solid fa-user-check"></i> Donor Verification
         </a>
-        <a href="emergency-requests.php" class="nav-item">
+        <a href="emergencyRequest.php" class="nav-item">
           <i class="fa-solid fa-clipboard-list"></i> Emergency Requests
         </a>
       </nav>
@@ -183,7 +176,7 @@ $conn->close();
           <?php if ($pending_verifications > 0): ?>
             <span class="badge badge-orange"><?php echo $pending_verifications; ?> pending</span>
           <?php endif; ?>
-          <a href="donor-verification.php" class="action-link">Manage donors <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="donorverification.php" class="action-link">Manage donors <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="action-card">
@@ -195,7 +188,7 @@ $conn->close();
           <?php if ($pending_requests > 0): ?>
             <span class="badge badge-red"><?php echo $pending_requests; ?> pending</span>
           <?php endif; ?>
-          <a href="emergency-requests.php" class="action-link">Manage requests <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="emergencyRequest.php" class="action-link">Manage requests <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -215,8 +208,8 @@ $conn->close();
             <?php if ($recent_donors && $recent_donors->num_rows > 0): ?>
               <?php while ($row = $recent_donors->fetch_assoc()): ?>
                 <tr>
-                  <td><?php echo htmlspecialchars($row['full_name']); ?></td>
-                  <td><span class="blood-badge"><?php echo htmlspecialchars($row['blood_type']); ?></span></td>
+                  <td><?php echo htmlspecialchars($row['name']); ?></td>
+                  <td><span class="blood-badge"><?php echo htmlspecialchars($row['blood_group']); ?></span></td>
                   <td>
                     <?php
                       $status = $row['status'];

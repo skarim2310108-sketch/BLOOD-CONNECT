@@ -5,22 +5,7 @@
 // ============================================================
 
 // ── DB Connection ────────────────────────────────────────────
-$host   = 'localhost';
-$db     = 'blood_connect';
-$user   = 'root';   // Change if you set a MySQL password
-$pass   = '';       // Change if you set a MySQL password
-
-try {
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$db;charset=utf8mb4",
-        $user,
-        $pass,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (PDOException $e) {
-    die('<p style="color:red;font-family:sans-serif;padding:20px;">
-         DB Connection failed: ' . htmlspecialchars($e->getMessage()) . '</p>');
-}
+require_once '../db.php';
 
 // ── Handle Approve / Reject POST ────────────────────────────
 $action_msg = '';
@@ -119,7 +104,7 @@ function blood_class(string $type): string {
       <a href="admindashboard.php" class="nav-item">
         <i class="fa-solid fa-grip"></i> Dashboard
       </a>
-      <a href="donorvarification.php" class="nav-item">
+      <a href="donorverification.php" class="nav-item">
         <i class="fa-solid fa-user-check"></i> Donor Verification
       </a>
       <a href="emergencyRequest.php" class="nav-item active">

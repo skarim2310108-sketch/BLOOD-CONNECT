@@ -8,7 +8,7 @@ $district = trim($_GET['district'] ?? '');
 $area = trim($_GET['area'] ?? '');
 
 // Build query dynamically
-$sql = "SELECT * FROM donors WHERE status = 'available'";
+$sql = "SELECT * FROM donors WHERE status IN ('available', 'verified')";
 $params = [];
 
 if (!empty($blood_group)) {
