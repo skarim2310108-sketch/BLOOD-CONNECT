@@ -88,9 +88,9 @@ $recent_donors = $conn->query(
         <a href="donorverification.php" class="nav-item">
           <i class="fa-solid fa-user-check"></i> Donor Verification
         </a>
-        <a href="emergencyRequest.php" class="nav-item">
+        <!-- <a href="emergencyRequest.php" class="nav-item">
           <i class="fa-solid fa-clipboard-list"></i> Emergency Requests
-        </a>
+        </a> -->
       </nav>
 
       <a href="logout.php" class="sign-out">
@@ -179,7 +179,7 @@ $recent_donors = $conn->query(
           <a href="donorverification.php" class="action-link">Manage donors <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        <div class="action-card">
+        <!-- <div class="action-card">
           <div class="action-icon icon-red-soft">
             <i class="fa-solid fa-clipboard-list"></i>
           </div>
@@ -189,7 +189,7 @@ $recent_donors = $conn->query(
             <span class="badge badge-red"><?php echo $pending_requests; ?> pending</span>
           <?php endif; ?>
           <a href="emergencyRequest.php" class="action-link">Manage requests <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
+        </div> -->
       </div>
 
       <!-- Recent Donor Activity Table -->

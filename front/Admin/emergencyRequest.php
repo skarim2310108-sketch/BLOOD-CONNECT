@@ -107,9 +107,9 @@ function blood_class(string $type): string {
       <a href="donorverification.php" class="nav-item">
         <i class="fa-solid fa-user-check"></i> Donor Verification
       </a>
-      <a href="emergencyRequest.php" class="nav-item active">
+      <!-- <a href="emergencyRequest.php" class="nav-item active">
         <i class="fa-solid fa-clipboard-list"></i> Emergency Requests
-      </a>
+      </a> -->
     </nav>
 
     <a href="logout.php" class="sign-out">
